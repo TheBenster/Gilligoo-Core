@@ -4,31 +4,50 @@ import Post from "@/models/Post";
 
 // Generate static params for published posts
 export async function generateStaticParams() {
-  await dbConnect();
-  const posts = await Post.find({ isPublished: true }).select("slug").lean();
+  try {
+    const connection = await dbConnect();
+    if (!connection) {
+      // During build time, return empty array
+      return [];
+    }
 
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+    const posts = await Post.find({ isPublished: true }).select("slug").lean();
+    return posts.map((post) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.log("Could not generate static params, returning empty array:", error.message);
+    return [];
+  }
 }
 
 // Get post data
 async function getPost(slug) {
-  await dbConnect();
-  const post = await Post.findOne({ slug, isPublished: true }).lean();
+  try {
+    const connection = await dbConnect();
+    if (!connection) {
+      // During build time, return null
+      return null;
+    }
 
-  if (!post) {
+    const post = await Post.findOne({ slug, isPublished: true }).lean();
+
+    if (!post) {
+      return null;
+    }
+
+    // Convert ObjectId to string for serialization
+    return {
+      ...post,
+      _id: post._id.toString(),
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
+      publishedAt: post.publishedAt?.toISOString() || null,
+    };
+  } catch (error) {
+    console.log("Could not fetch post during build:", error.message);
     return null;
   }
-
-  // Convert ObjectId to string for serialization
-  return {
-    ...post,
-    _id: post._id.toString(),
-    createdAt: post.createdAt.toISOString(),
-    updatedAt: post.updatedAt.toISOString(),
-    publishedAt: post.publishedAt?.toISOString() || null,
-  };
 }
 
 export default async function BlogPostPage({ params }) {
