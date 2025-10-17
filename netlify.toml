@@ -3,13 +3,4 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "18"
-  NETLIFY_BUILD_CONTEXT = "production"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-[functions]
-  node_bundler = "nft"
+  NODE_VERSION = "20"
