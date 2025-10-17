@@ -1,7 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 
-/* Custom goblin-themed styles */
+/* custom goblin-themed styles with dark mode support */
+:root {
+  /* light mode */
+  --bg-primary: #fafafa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f5f5f5;
+  --text-primary: #1a1a1a;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --accent-primary: #16a34a;
+  --accent-secondary: #15803d;
+  --border-color: #e5e5e5;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+[data-theme="dark"] {
+  /* dark mode */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #171717;
+  --bg-tertiary: #262626;
+  --text-primary: #fafafa;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #a3a3a3;
+  --accent-primary: #22c55e;
+  --accent-secondary: #16a34a;
+  --border-color: #404040;
+  --card-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -12,9 +40,11 @@
   }
 
   body {
-    @apply bg-slate-900 text-emerald-100;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     font-family: "Inter", system-ui, -apple-system, sans-serif;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1,
@@ -23,10 +53,82 @@
   h4,
   h5,
   h6 {
-    @apply font-bold text-emerald-100;
+    @apply font-bold;
+    color: var(--text-primary);
   }
 
   a {
     @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* subtle gradient backgrounds */
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      var(--bg-secondary) 0%,
+      var(--bg-tertiary) 100%
+    );
+  }
+
+  .gradient-border {
+    position: relative;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent-primary), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 0.5;
+  }
+
+  .card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-color: var(--accent-primary);
+  }
+
+  .btn-primary {
+    background: var(--accent-primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid var(--accent-secondary);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-secondary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2);
+  }
+
+  .accent-line {
+    width: 3px;
+    background: var(--accent-primary);
+    border-radius: 999px;
   }
 }
