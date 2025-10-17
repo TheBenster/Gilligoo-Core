@@ -18,14 +18,17 @@ export default function RootLayout({ children }) {
         <Providers>
           <GoblinNavbar />
           <main>{children}</main>
-          <footer className="bg-slate-900 border-t border-emerald-800 py-8">
+          <footer style={{
+            background: "var(--bg-secondary)",
+            borderTop: "1px solid var(--border-color)"
+          }} className="py-8">
             <div className="container mx-auto px-4 text-center">
-              <p className="text-emerald-300">
-                The Closet Goblin Chronicles - Documenting the art of shadow
+              <p style={{ color: "var(--text-secondary)" }}>
+                the closet goblin chronicles - documenting the art of shadow
                 commerce since the dawn of wardrobes
               </p>
-              <p className="text-emerald-400 text-sm mt-2">
-                "Stay hidden, trade wisely, respect the dust bunnies"
+              <p style={{ color: "var(--text-tertiary)" }} className="text-sm mt-2">
+                "stay hidden, trade wisely, respect the dust bunnies"
               </p>
             </div>
           </footer>
