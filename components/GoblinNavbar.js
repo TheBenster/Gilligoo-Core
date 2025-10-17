@@ -13,6 +13,18 @@ export default function GoblinNavbar() {
   const { data: session, status } = useSession();
   const { theme, toggleTheme } = useTheme();
 
+  // Debug logging
+  useEffect(() => {
+    if (session) {
+      console.log("🔍 NAVBAR SESSION DEBUG:");
+      console.log("User ID:", session.user?.id);
+      console.log("User Email:", session.user?.email);
+      console.log("User Name:", session.user?.name);
+      console.log("Is Admin:", session.user?.isAdmin);
+      console.log("Full session:", session);
+    }
+  }, [session]);
+
   useEffect(() => {
     const fetchInventoryCount = async () => {
       try {
