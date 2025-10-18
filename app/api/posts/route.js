@@ -6,7 +6,19 @@ import { requireAdmin } from "@/lib/auth";
 // GET - Fetch all posts
 export async function GET(request) {
   try {
-    await dbConnect();
+    const db = await dbConnect();
+
+    if (!db) {
+      console.error("❌ Database connection failed - dbConnect returned null");
+      return NextResponse.json(
+        {
+          message: "Database connection failed",
+          error: "Could not connect to MongoDB. Check MONGODB_URI environment variable.",
+          hint: "This usually means the connection string is missing or invalid in production."
+        },
+        { status: 500 }
+      );
+    }
 
     const { searchParams } = new URL(request.url);
     const published = searchParams.get("published");
@@ -33,9 +45,9 @@ export async function GET(request) {
       pages: Math.ceil(total / limit),
     });
   } catch (error) {
-    console.error("Error fetching posts:", error);
+    console.error("❌ Error fetching posts:", error);
     return NextResponse.json(
-      { message: "Error fetching posts", error: error.message },
+      { message: "Error fetching posts", error: error.message, stack: error.stack },
       { status: 500 }
     );
   }
