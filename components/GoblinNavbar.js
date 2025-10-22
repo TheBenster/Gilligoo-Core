@@ -44,7 +44,7 @@ export default function GoblinNavbar() {
     { href: "/blog", label: "Chronicles" },
     { href: "/lore", label: "Lore" },
     { href: "/inventory", label: "Inventory" },
-    { href: "/write", label: "Write" },
+    { href: "/write", label: "Write", adminOnly: true },
   ];
 
   const isActive = (href) => {
@@ -72,19 +72,26 @@ export default function GoblinNavbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  isActive(item.href)
-                    ? "bg-emerald-700 text-emerald-100 shadow-lg"
-                    : "text-emerald-300 hover:text-emerald-100 hover:bg-emerald-800 hover:bg-opacity-50"
-                }`}
-              >
-                <span>{item.label}</span>
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              // Hide admin-only items if user is not admin
+              if (item.adminOnly && !session?.user?.isAdmin) {
+                return null;
+              }
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    isActive(item.href)
+                      ? "bg-emerald-700 text-emerald-100 shadow-lg"
+                      : "text-emerald-300 hover:text-emerald-100 hover:bg-emerald-800 hover:bg-opacity-50"
+                  }`}
+                >
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
 
             {/* Theme Toggle */}
             <button
@@ -191,20 +198,27 @@ export default function GoblinNavbar() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-emerald-800">
             <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
-                    isActive(item.href)
-                      ? "bg-emerald-700 text-emerald-100"
-                      : "text-emerald-300 hover:text-emerald-100 hover:bg-emerald-800 hover:bg-opacity-50"
-                  }`}
-                >
-                  <span>{item.label}</span>
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                // Hide admin-only items if user is not admin
+                if (item.adminOnly && !session?.user?.isAdmin) {
+                  return null;
+                }
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
+                      isActive(item.href)
+                        ? "bg-emerald-700 text-emerald-100"
+                        : "text-emerald-300 hover:text-emerald-100 hover:bg-emerald-800 hover:bg-opacity-50"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

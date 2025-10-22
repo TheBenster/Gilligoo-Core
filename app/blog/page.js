@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
 
   useEffect(() => {
     fetchPosts();
@@ -54,9 +56,11 @@ export default function BlogPage() {
               <p className="text-emerald-200 mb-6">
                 The goblin archives are empty. Time to document some adventures!
               </p>
-              <Link href="/write" className="goblin-button inline-block">
-                Write First Chronicle
-              </Link>
+              {session?.user?.isAdmin && (
+                <Link href="/write" className="goblin-button inline-block">
+                  Write First Chronicle
+                </Link>
+              )}
             </div>
           </div>
         ) : (
@@ -120,11 +124,13 @@ export default function BlogPage() {
           </div>
         )}
 
-        <div className="text-center mt-12">
-          <Link href="/write" className="goblin-button">
-            Write New Chronicle
-          </Link>
-        </div>
+        {session?.user?.isAdmin && (
+          <div className="text-center mt-12">
+            <Link href="/write" className="goblin-button">
+              Write New Chronicle
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
