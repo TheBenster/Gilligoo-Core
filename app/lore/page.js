@@ -139,13 +139,13 @@ export default function LorePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-emerald-900 to-slate-800">
+    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-emerald-100 mb-4">
+          <h1 className="text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
             Goblin Lore Archive
           </h1>
-          <p className="text-xl text-emerald-200 max-w-3xl mx-auto">
+          <p className="text-xl max-w-3xl mx-auto" style={{ color: "var(--text-secondary)" }}>
             Sacred wisdom, ancient codes, and the secret knowledge passed down
             through generations of closet-dwelling merchants
           </p>
@@ -156,11 +156,11 @@ export default function LorePage() {
           <div className="flex flex-wrap justify-center gap-2">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                selectedCategory === "all"
-                  ? "bg-emerald-600 text-white"
-                  : "bg-emerald-800 bg-opacity-50 text-emerald-200 hover:bg-emerald-700"
-              }`}
+              className="px-4 py-2 rounded-lg font-semibold transition-colors duration-200"
+              style={{
+                background: selectedCategory === "all" ? "var(--accent-primary)" : "var(--bg-secondary)",
+                color: selectedCategory === "all" ? "var(--text-on-accent)" : "var(--text-secondary)"
+              }}
             >
               All Lore
             </button>
@@ -168,11 +168,11 @@ export default function LorePage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
-                  selectedCategory === category
-                    ? "bg-amber-600 text-white"
-                    : "bg-amber-800 bg-opacity-50 text-amber-200 hover:bg-amber-700"
-                }`}
+                className="px-4 py-2 rounded-lg font-semibold transition-colors duration-200"
+                style={{
+                  background: selectedCategory === category ? "var(--accent-secondary)" : "var(--bg-secondary)",
+                  color: selectedCategory === category ? "var(--text-on-accent)" : "var(--text-secondary)"
+                }}
               >
                 {category}
               </button>
@@ -185,7 +185,8 @@ export default function LorePage() {
           <div className="text-center mb-8">
             <button
               onClick={() => setShowAddForm(true)}
-              className="bg-purple-600 hover:bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 shadow-lg"
+              className="px-8 py-3 rounded-lg font-semibold transition-colors duration-200 shadow-lg"
+              style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
             >
               Add New Lore
             </button>
@@ -208,15 +209,15 @@ export default function LorePage() {
         {/* Lore Content */}
         {loading ? (
           <div className="text-center py-12">
-            <div className="text-emerald-300 text-lg">Loading ancient wisdom...</div>
+            <div className="text-lg" style={{ color: "var(--text-secondary)" }}>Loading ancient wisdom...</div>
           </div>
         ) : lore.length === 0 ? (
           <div className="text-center mt-12">
             <div className="goblin-card p-8 max-w-md mx-auto">
-              <h3 className="text-2xl font-bold text-amber-300 mb-4">
+              <h3 className="text-2xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
                 No Lore Found
               </h3>
-              <p className="text-amber-200">
+              <p style={{ color: "var(--text-secondary)" }}>
                 This category of ancient wisdom has yet to be documented...
               </p>
             </div>
@@ -243,19 +244,19 @@ export default function LorePage() {
               <div className="text-2xl font-bold text-red-400">
                 {lore.filter((l) => l.importance === "Sacred").length}
               </div>
-              <div className="text-red-300 text-sm">Sacred Texts</div>
+              <div className="text-sm" style={{ color: "var(--text-secondary)" }}>Sacred Texts</div>
             </div>
             <div className="goblin-card p-4 text-center">
               <div className="text-2xl font-bold text-amber-400">
                 {lore.filter((l) => l.importance === "Important").length}
               </div>
-              <div className="text-amber-300 text-sm">Important Laws</div>
+              <div className="text-sm" style={{ color: "var(--text-secondary)" }}>Important Laws</div>
             </div>
             <div className="goblin-card p-4 text-center">
-              <div className="text-2xl font-bold text-emerald-400">
+              <div className="text-2xl font-bold" style={{ color: "var(--accent-primary)" }}>
                 {lore.filter((l) => l.importance === "Useful").length}
               </div>
-              <div className="text-emerald-300 text-sm">Useful Knowledge</div>
+              <div className="text-sm" style={{ color: "var(--text-secondary)" }}>Useful Knowledge</div>
             </div>
             <div className="goblin-card p-4 text-center">
               <div className="text-2xl font-bold text-purple-400">
@@ -263,7 +264,7 @@ export default function LorePage() {
                   lore.reduce((sum, l) => sum + l.secretLevel, 0) / lore.length
                 ) : 0}
               </div>
-              <div className="text-purple-300 text-sm">Avg Secret Level</div>
+              <div className="text-sm" style={{ color: "var(--text-secondary)" }}>Avg Secret Level</div>
             </div>
           </div>
         )}
@@ -287,21 +288,22 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
         <div className="space-y-3">
           {lore.historyType === "Event" && lore.year && lore.era && (
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-amber-300 font-bold text-lg">
+              <span className="font-bold text-lg" style={{ color: "var(--accent-secondary)" }}>
                 {lore.year} {lore.era}
               </span>
-              <span className="text-amber-500 text-sm">
+              <span className="text-sm" style={{ color: "var(--text-tertiary)" }}>
                 ({lore.era === "OD" ? "OglethorpeDorper" : "A Great Goblin"})
               </span>
             </div>
           )}
           {lore.historyType === "General Lore" && (
-            <div className="text-amber-400 text-sm font-medium mb-3">
+            <div className="text-sm font-medium mb-3" style={{ color: "var(--accent-secondary)" }}>
               General Lore
             </div>
           )}
           <div
-            className="text-amber-100 leading-relaxed text-base prose prose-amber prose-invert max-w-none"
+            className="leading-relaxed text-base prose prose-invert max-w-none"
+            style={{ color: "var(--text-primary)" }}
             dangerouslySetInnerHTML={{ __html: md.render(lore.content) }}
           />
         </div>
@@ -312,17 +314,22 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
       return (
         <div className="space-y-3">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-amber-300 font-bold">
+            <span className="font-bold" style={{ color: "var(--accent-secondary)" }}>
               Statute {lore.statuteNumber}
-              {lore.section && <span className="text-amber-400">({lore.section})</span>}
+              {lore.section && <span style={{ color: "var(--text-secondary)" }}>({lore.section})</span>}
             </span>
           </div>
           <div
-            className="text-amber-100 leading-relaxed font-serif text-base bg-slate-800 bg-opacity-50 p-4 rounded border-l-4 border-amber-600 prose prose-amber prose-invert max-w-none"
+            className="leading-relaxed font-serif text-base p-4 rounded border-l-4 prose prose-invert max-w-none"
+            style={{
+              color: "var(--text-primary)",
+              background: "var(--bg-tertiary)",
+              borderColor: "var(--accent-secondary)"
+            }}
             dangerouslySetInnerHTML={{ __html: md.render(lore.content) }}
           />
           {lore.penalty && (
-            <div className="text-red-300 text-sm bg-red-900 bg-opacity-30 p-3 rounded">
+            <div className="text-sm p-3 rounded" style={{ color: "var(--text-primary)", background: "var(--bg-tertiary)" }}>
               <span className="font-semibold">Penalty:</span> {lore.penalty}
             </div>
           )}
@@ -333,7 +340,8 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
     // Default formatting for other categories
     return (
       <div
-        className="text-amber-100 leading-relaxed prose prose-amber prose-invert max-w-none"
+        className="leading-relaxed prose prose-invert max-w-none"
+        style={{ color: "var(--text-primary)" }}
         dangerouslySetInnerHTML={{ __html: md.render(lore.content) }}
       />
     );
@@ -342,7 +350,7 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
   return (
     <div className="lore-card">
       <div className="flex justify-between items-start mb-3">
-        <h3 className="text-xl font-bold text-amber-200">
+        <h3 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
           {lore.title}
         </h3>
         {lore.category !== "Goblin History" && (
@@ -354,7 +362,7 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
             >
               {lore.importance}
             </span>
-            <span className="text-purple-300 text-xs">
+            <span className="text-xs text-purple-300">
               Secret Level: {lore.secretLevel}/10
             </span>
           </div>
@@ -362,7 +370,7 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
       </div>
 
       <div className="mb-3">
-        <span className="bg-emerald-800 text-emerald-200 px-2 py-1 rounded text-sm">
+        <span className="px-2 py-1 rounded text-sm" style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}>
           {lore.category}
         </span>
       </div>
@@ -374,7 +382,8 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
           {lore.tags.map((tag, index) => (
             <span
               key={index}
-              className="bg-slate-700 text-slate-300 px-2 py-1 rounded text-xs"
+              className="px-2 py-1 rounded text-xs"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-secondary)" }}
             >
               #{tag}
             </span>
@@ -384,10 +393,11 @@ function LoreCard({ lore, getImportanceColor, isAdmin, onEdit, onDelete }) {
 
       {/* Admin Actions */}
       {isAdmin && (
-        <div className="mt-4 pt-3 border-t border-slate-700 flex gap-2">
+        <div className="mt-4 pt-3 border-t flex gap-2" style={{ borderColor: "var(--border-primary)" }}>
           <button
             onClick={() => onEdit(lore)}
-            className="flex-1 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 px-3 py-2 rounded text-sm font-medium transition-colors"
+            className="flex-1 px-3 py-2 rounded text-sm font-medium transition-colors"
+            style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
           >
             Edit
           </button>
@@ -467,8 +477,8 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
   };
 
   return (
-    <div className="bg-slate-800 rounded-lg p-6 mb-8 border border-purple-600">
-      <h2 className="text-2xl font-bold text-purple-200 mb-4">
+    <div className="rounded-lg p-6 mb-8 border" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-primary)" }}>
+      <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
         {isEditing ? "Edit Lore Entry" : "Add New Lore Entry"}
       </h2>
 
@@ -476,7 +486,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Title */}
           <div>
-            <label className="block text-purple-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Title *
             </label>
             <input
@@ -485,20 +495,22 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             />
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-purple-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Category *
             </label>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               <option value="Goblin Code">Goblin Code</option>
               <option value="Merchant Laws">Merchant Laws</option>
@@ -515,7 +527,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
           {formData.category === "Goblin History" && (
             <>
               <div>
-                <label className="block text-purple-300 text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                   Entry Type *
                 </label>
                 <select
@@ -523,7 +535,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
                   value={formData.historyType}
                   onChange={handleChange}
                   required
-                  className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
                 >
                   <option value="Event">Historical Event</option>
                   <option value="General Lore">General Lore</option>
@@ -533,7 +545,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
               {formData.historyType === "Event" && (
                 <>
                   <div>
-                    <label className="block text-purple-300 text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                       Year *
                     </label>
                     <input
@@ -542,12 +554,12 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
                       value={formData.year}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+                      className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-purple-300 text-sm font-medium mb-1">
+                    <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                       Era *
                     </label>
                     <select
@@ -555,7 +567,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
                       value={formData.era}
                       onChange={handleChange}
                       required
-                      className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+                      className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
                     >
                       <option value="OD">OD (OglethorpeDorper)</option>
                       <option value="AGG">AGG (A Great Goblin)</option>
@@ -570,7 +582,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
           {formData.category === "Merchant Laws" && (
             <>
               <div>
-                <label className="block text-purple-300 text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                   Statute Number *
                 </label>
                 <input
@@ -580,12 +592,12 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
                   onChange={handleChange}
                   placeholder="e.g., 42.1"
                   required
-                  className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
                 />
               </div>
 
               <div>
-                <label className="block text-purple-300 text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                   Section (optional)
                 </label>
                 <input
@@ -594,7 +606,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
                   value={formData.section}
                   onChange={handleChange}
                   placeholder="e.g., a, b, c"
-                  className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+                  className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
                 />
               </div>
             </>
@@ -603,14 +615,14 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
           {/* Importance - Hide for Goblin History */}
           {formData.category !== "Goblin History" && (
             <div>
-              <label className="block text-purple-300 text-sm font-medium mb-1">
+              <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                 Importance
               </label>
               <select
                 name="importance"
                 value={formData.importance}
                 onChange={handleChange}
-                className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+                className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
               >
                 <option value="Trivia">Trivia</option>
                 <option value="Useful">Useful</option>
@@ -623,7 +635,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
           {/* Secret Level - Hide for Goblin History */}
           {formData.category !== "Goblin History" && (
             <div>
-              <label className="block text-purple-300 text-sm font-medium mb-1">
+              <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
                 Secret Level (1-10)
               </label>
               <input
@@ -644,7 +656,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
 
         {/* Content */}
         <div>
-          <label className="block text-purple-300 text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
             Content *
           </label>
           <textarea
@@ -653,14 +665,14 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
             onChange={handleChange}
             required
             rows={formData.category === "Goblin History" ? 6 : 4}
-            className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
           />
         </div>
 
         {/* Penalty for Merchant Laws */}
         {formData.category === "Merchant Laws" && (
           <div>
-            <label className="block text-purple-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Penalty (optional)
             </label>
             <input
@@ -669,14 +681,14 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
               value={formData.penalty}
               onChange={handleChange}
               placeholder="e.g., Loss of trading privileges for 1 moon cycle"
-              className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             />
           </div>
         )}
 
         {/* Tags */}
         <div>
-          <label className="block text-purple-300 text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
             Tags (comma-separated)
           </label>
           <input
@@ -685,7 +697,7 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
             value={formData.tags}
             onChange={handleChange}
             placeholder="e.g., stealth, trading, ancient"
-            className="w-full px-3 py-2 bg-slate-700 text-purple-100 rounded-lg border border-purple-800 focus:border-purple-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg border focus:outline-none" style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
           />
         </div>
 
@@ -693,14 +705,16 @@ function AddLoreForm({ onSubmit, onCancel, initialData, isEditing }) {
         <div className="flex gap-4">
           <button
             type="submit"
-            className="bg-purple-600 hover:bg-purple-500 text-purple-100 px-6 py-2 rounded-lg font-medium transition-colors"
+            className="px-6 py-2 rounded-lg font-medium transition-colors"
+            style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
           >
             {isEditing ? "Update Lore Entry" : "Add Lore Entry"}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="bg-slate-600 hover:bg-slate-500 text-purple-100 px-6 py-2 rounded-lg font-medium transition-colors"
+            className="px-6 py-2 rounded-lg font-medium transition-colors"
+            style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)" }}
           >
             Cancel
           </button>
