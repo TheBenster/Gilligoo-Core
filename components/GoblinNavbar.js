@@ -30,7 +30,7 @@ export default function GoblinNavbar() {
       try {
         const response = await fetch('/api/inventory');
         const data = await response.json();
-        setInventoryCount(data.items?.length || 0);
+        setInventoryCount(data.total || 0);
       } catch (error) {
         console.error('Error fetching inventory count:', error);
       }
