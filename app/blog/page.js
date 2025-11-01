@@ -27,8 +27,8 @@ export default function BlogPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-emerald-900 to-slate-800 flex items-center justify-center">
-        <div className="text-emerald-300 text-xl">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
+        <div className="text-xl" style={{ color: "var(--text-secondary)" }}>
           Loading goblin chronicles...
         </div>
       </div>
@@ -36,13 +36,13 @@ export default function BlogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-emerald-900 to-slate-800">
+    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-emerald-100 mb-4">
+          <h1 className="text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
             Goblin Chronicles
           </h1>
-          <p className="text-xl text-emerald-200 max-w-2xl mx-auto">
+          <p className="text-xl max-w-2xl mx-auto" style={{ color: "var(--text-secondary)" }}>
             Tales from the depths of closet commerce and goblin wisdom
           </p>
         </div>
@@ -50,10 +50,10 @@ export default function BlogPage() {
         {posts.length === 0 ? (
           <div className="text-center">
             <div className="goblin-card p-8 max-w-md mx-auto">
-              <h3 className="text-2xl font-bold text-emerald-300 mb-4">
+              <h3 className="text-2xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
                 No Chronicles Yet
               </h3>
-              <p className="text-emerald-200 mb-6">
+              <p className="mb-6" style={{ color: "var(--text-secondary)" }}>
                 The goblin archives are empty. Time to document some adventures!
               </p>
               {session?.user?.isAdmin && (
@@ -87,11 +87,11 @@ export default function BlogPage() {
                   </span>
                 </div>
 
-                <h2 className="text-xl font-bold text-emerald-200 mb-3 hover:text-emerald-100 transition-colors">
+                <h2 className="text-xl font-bold mb-3 transition-colors" style={{ color: "var(--text-primary)" }}>
                   <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                 </h2>
 
-                <p className="text-emerald-300 text-sm mb-4 line-clamp-3">
+                <p className="text-sm mb-4 line-clamp-3" style={{ color: "var(--text-secondary)" }}>
                   {post.excerpt}
                 </p>
 
@@ -99,14 +99,15 @@ export default function BlogPage() {
                   {post.tags?.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
-                      className="bg-emerald-800 text-emerald-200 px-2 py-1 rounded text-xs"
+                      className="px-2 py-1 rounded text-xs"
+                      style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
                     >
                       #{tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex justify-between items-center text-sm text-emerald-400">
+                <div className="flex justify-between items-center text-sm" style={{ color: "var(--text-tertiary)" }}>
                   <span>
                     {new Date(
                       post.publishedAt || post.createdAt
@@ -114,7 +115,8 @@ export default function BlogPage() {
                   </span>
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="text-emerald-300 hover:text-emerald-100 font-semibold"
+                    className="font-semibold"
+                    style={{ color: "var(--accent-primary)" }}
                   >
                     Read Chronicle →
                   </Link>

@@ -150,20 +150,20 @@ export default function InventoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 py-8">
+    <div className="min-h-screen py-8" style={{ background: "var(--bg-primary)" }}>
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-emerald-200 mb-2">
+          <h1 className="text-4xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
             Goblin Inventory
           </h1>
-          <p className="text-emerald-300">
+          <p style={{ color: "var(--text-secondary)" }}>
             Manage your precious collection of acquired goods
           </p>
         </div>
 
         {/* Controls */}
-        <div className="bg-slate-800 rounded-lg p-6 mb-8">
+        <div className="rounded-lg p-6 mb-8" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-primary)" }}>
           <div className="flex flex-wrap gap-4 mb-4">
             {/* Search */}
             <div className="flex-1 min-w-64">
@@ -172,7 +172,8 @@ export default function InventoryPage() {
                 placeholder="Search inventory..."
                 value={filters.search}
                 onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                className="w-full px-4 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+                className="w-full px-4 py-2 rounded-lg border focus:outline-none"
+                style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
               />
             </div>
 
@@ -180,7 +181,8 @@ export default function InventoryPage() {
             <select
               value={filters.category}
               onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-              className="px-4 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="px-4 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               {categories.map(category => (
                 <option key={category} value={category}>
@@ -193,7 +195,8 @@ export default function InventoryPage() {
             <select
               value={filters.rarity}
               onChange={(e) => setFilters({ ...filters, rarity: e.target.value })}
-              className="px-4 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="px-4 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               {rarities.map(rarity => (
                 <option key={rarity} value={rarity}>
@@ -206,7 +209,8 @@ export default function InventoryPage() {
             <select
               value={filters.inStock}
               onChange={(e) => setFilters({ ...filters, inStock: e.target.value })}
-              className="px-4 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="px-4 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               <option value="all">All Items</option>
               <option value="true">In Stock</option>
@@ -218,7 +222,8 @@ export default function InventoryPage() {
           {session?.user?.isAdmin && (
             <button
               onClick={() => setShowAddForm(true)}
-              className="bg-emerald-700 hover:bg-emerald-600 text-emerald-100 px-6 py-2 rounded-lg font-medium transition-colors"
+              className="px-6 py-2 rounded-lg font-medium transition-colors"
+              style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
             >
               ➕ Add New Item
             </button>
@@ -241,12 +246,12 @@ export default function InventoryPage() {
         {/* Inventory Grid */}
         {loading ? (
           <div className="text-center py-12">
-            <div className="text-emerald-300 text-lg">Loading inventory...</div>
+            <div className="text-lg" style={{ color: "var(--text-secondary)" }}>Loading inventory...</div>
           </div>
         ) : inventory.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-emerald-300 text-lg mb-4">No items found</div>
-            <p className="text-emerald-400">
+            <div className="text-lg mb-4" style={{ color: "var(--text-primary)" }}>No items found</div>
+            <p style={{ color: "var(--text-secondary)" }}>
               {Object.values(filters).some(f => f && f !== "all")
                 ? "Try adjusting your filters"
                 : "Start by adding your first item!"}
@@ -290,9 +295,9 @@ export default function InventoryPage() {
 
 function InventoryCard({ item, onDelete, onEdit, onView, getRarityColor, isAdmin }) {
   return (
-    <div className="bg-slate-800 rounded-lg overflow-hidden border border-emerald-800 hover:border-emerald-600 transition-colors cursor-pointer group" onClick={() => onView(item)}>
+    <div className="rounded-lg overflow-hidden border transition-colors cursor-pointer group" onClick={() => onView(item)} style={{ background: "var(--bg-secondary)", borderColor: "var(--border-primary)" }}>
       {/* Item Image */}
-      <div className="aspect-square bg-slate-700 relative">
+      <div className="aspect-square relative" style={{ background: "var(--bg-tertiary)" }}>
         <img
           src={item.picture}
           alt={item.title}
@@ -315,26 +320,26 @@ function InventoryCard({ item, onDelete, onEdit, onView, getRarityColor, isAdmin
 
       {/* Item Details */}
       <div className="p-4">
-        <h3 className="text-emerald-200 font-semibold text-lg mb-1 line-clamp-1 group-hover:text-emerald-100 transition-colors">
+        <h3 className="font-semibold text-lg mb-1 line-clamp-1 transition-colors" style={{ color: "var(--text-primary)" }}>
           {item.title}
         </h3>
 
         <div className="flex items-center justify-between mb-2">
-          <span className="text-emerald-300 text-sm">{item.category}</span>
-          <span className="text-yellow-400 font-bold">
+          <span className="text-sm" style={{ color: "var(--text-secondary)" }}>{item.category}</span>
+          <span className="font-bold" style={{ color: "var(--accent-secondary)" }}>
             {item.shlingobs} SL
           </span>
         </div>
 
-        <p className="text-emerald-400 text-sm mb-3 line-clamp-2">
+        <p className="text-sm mb-3 line-clamp-2" style={{ color: "var(--text-secondary)" }}>
           {item.description}
         </p>
 
-        <div className="text-xs text-emerald-300 mb-3 opacity-70 group-hover:opacity-100 transition-opacity">
+        <div className="text-xs mb-3 opacity-70 group-hover:opacity-100 transition-opacity" style={{ color: "var(--text-tertiary)" }}>
           Click to view details
         </div>
 
-        <div className="flex items-center justify-between text-xs text-emerald-500 mb-3">
+        <div className="flex items-center justify-between text-xs mb-3" style={{ color: "var(--text-tertiary)" }}>
           <span>Qty: {item.quantity}</span>
           <span>{item.condition}</span>
         </div>
@@ -356,7 +361,8 @@ function InventoryCard({ item, onDelete, onEdit, onView, getRarityColor, isAdmin
                 e.stopPropagation();
                 onEdit(item);
               }}
-              className="flex-1 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 px-3 py-2 rounded text-sm font-medium transition-colors">
+              className="flex-1 px-3 py-2 rounded text-sm font-medium transition-colors"
+              style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}>
               Edit
             </button>
           </div>
@@ -457,8 +463,8 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
   };
 
   return (
-    <div className="bg-slate-800 rounded-lg p-6 mb-8 border border-emerald-800">
-      <h2 className="text-2xl font-bold text-emerald-200 mb-4">
+    <div className="rounded-lg p-6 mb-8 border" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-primary)" }}>
+      <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
         {isEditing ? "Edit Item" : "Add New Item"}
       </h2>
 
@@ -466,7 +472,7 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Title */}
           <div>
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Title *
             </label>
             <input
@@ -475,13 +481,14 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             />
           </div>
 
           {/* Shlingobs */}
           <div>
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Price (Shlingobs) *
             </label>
             <input
@@ -492,13 +499,14 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
               min="0"
               step="0.01"
               required
-              className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             />
           </div>
 
           {/* Picture Upload */}
           <div className="md:col-span-2">
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Picture *
             </label>
             <div className="space-y-3">
@@ -507,14 +515,16 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
                 accept="image/*"
                 onChange={handleFileChange}
                 required
-                className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-emerald-700 file:text-emerald-100 hover:file:bg-emerald-600"
+                className="w-full px-3 py-2 rounded-lg border focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium"
+                style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
               />
               {imagePreview && (
                 <div className="mt-3">
                   <img
                     src={imagePreview}
                     alt="Preview"
-                    className="w-32 h-32 object-cover rounded-lg border border-emerald-800"
+                    className="w-32 h-32 object-cover rounded-lg border"
+                    style={{ borderColor: "var(--border-primary)" }}
                   />
                 </div>
               )}
@@ -523,14 +533,15 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
 
           {/* Category */}
           <div>
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Category
             </label>
             <select
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               <option value="Weapons">Weapons</option>
               <option value="Armor">Armor</option>
@@ -545,14 +556,15 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
 
           {/* Rarity */}
           <div>
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Rarity
             </label>
             <select
               name="rarity"
               value={formData.rarity}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               <option value="Common">Common</option>
               <option value="Uncommon">Uncommon</option>
@@ -564,14 +576,15 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
 
           {/* Condition */}
           <div>
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Condition
             </label>
             <select
               name="condition"
               value={formData.condition}
               onChange={handleChange}
-              className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             >
               <option value="Pristine">Pristine</option>
               <option value="Good">Good</option>
@@ -583,7 +596,7 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
 
           {/* Quantity */}
           <div>
-            <label className="block text-emerald-300 text-sm font-medium mb-1">
+            <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
               Quantity
             </label>
             <input
@@ -592,14 +605,15 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
               value={formData.quantity}
               onChange={handleChange}
               min="0"
-              className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+              className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+              style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
             />
           </div>
         </div>
 
         {/* Description */}
         <div>
-          <label className="block text-emerald-300 text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
             Description *
           </label>
           <textarea
@@ -608,13 +622,14 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
             onChange={handleChange}
             required
             rows={3}
-            className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+            style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
           />
         </div>
 
         {/* Merchant Notes */}
         <div>
-          <label className="block text-emerald-300 text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
             Merchant Notes
           </label>
           <textarea
@@ -622,13 +637,14 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
             value={formData.merchantNotes}
             onChange={handleChange}
             rows={2}
-            className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+            style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
           />
         </div>
 
         {/* Acquired From */}
         <div>
-          <label className="block text-emerald-300 text-sm font-medium mb-1">
+          <label className="block text-sm font-medium mb-1" style={{ color: "var(--text-secondary)" }}>
             Acquired From
           </label>
           <input
@@ -636,7 +652,8 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
             name="acquiredFrom"
             value={formData.acquiredFrom}
             onChange={handleChange}
-            className="w-full px-3 py-2 bg-slate-700 text-emerald-100 rounded-lg border border-emerald-800 focus:border-emerald-600 focus:outline-none"
+            className="w-full px-3 py-2 rounded-lg border focus:outline-none"
+            style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
           />
         </div>
 
@@ -645,7 +662,8 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
           <button
             type="submit"
             disabled={uploading}
-            className="bg-emerald-700 hover:bg-emerald-600 disabled:bg-emerald-800 disabled:cursor-not-allowed text-emerald-100 px-6 py-2 rounded-lg font-medium transition-colors"
+            className="px-6 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
           >
             {uploading ? "Uploading..." : (isEditing ? "Update Item" : "Add Item")}
           </button>
@@ -653,7 +671,8 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
             type="button"
             onClick={onCancel}
             disabled={uploading}
-            className="bg-slate-600 hover:bg-slate-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-emerald-100 px-6 py-2 rounded-lg font-medium transition-colors"
+            className="px-6 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)" }}
           >
             Cancel
           </button>

@@ -21,8 +21,8 @@ export default function WritePage() {
   // Show loading state while checking authentication
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-emerald-900 to-slate-800 py-8 flex items-center justify-center">
-        <div className="text-emerald-300 text-xl">Loading...</div>
+      <div className="min-h-screen py-8 flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
+        <div className="text-xl" style={{ color: "var(--text-secondary)" }}>Loading...</div>
       </div>
     );
   }
