@@ -37,11 +37,6 @@ const PostSchema = new mongoose.Schema(
       max: 5,
       default: 3,
     },
-    merchantLevel: {
-      type: String,
-      enum: ["Apprentice", "Journeyman", "Master", "Grand Master"],
-      default: "Apprentice",
-    },
     isPublished: {
       type: Boolean,
       default: false,

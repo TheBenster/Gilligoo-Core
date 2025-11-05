@@ -302,6 +302,7 @@ function InventoryCard({ item, onDelete, onEdit, onView, getRarityColor, isAdmin
           src={item.picture}
           alt={item.title}
           className="w-full h-full object-cover"
+          style={{ objectPosition: item.imagePosition || "center" }}
           onError={(e) => {
             e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23374151'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='16' fill='%236B7280' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
           }}
@@ -388,6 +389,7 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState(initialData?.picture || null);
+  const [imagePosition, setImagePosition] = useState(initialData?.imagePosition || "center");
 
   // Set image preview for editing existing items
   useEffect(() => {
@@ -428,6 +430,7 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
       const submitData = {
         ...formData,
         picture: uploadData.url,
+        imagePosition: imagePosition,
         shlingobs: parseFloat(formData.shlingobs),
         quantity: parseInt(formData.quantity),
       };
@@ -519,13 +522,37 @@ function AddItemForm({ onSubmit, onCancel, initialData, isEditing }) {
                 style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
               />
               {imagePreview && (
-                <div className="mt-3">
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="w-32 h-32 object-cover rounded-lg border"
-                    style={{ borderColor: "var(--border-primary)" }}
-                  />
+                <div className="mt-3 space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium mb-2" style={{ color: "var(--text-secondary)" }}>
+                      Image Crop Position
+                    </label>
+                    <select
+                      value={imagePosition}
+                      onChange={(e) => setImagePosition(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg border focus:outline-none text-sm"
+                      style={{ background: "var(--bg-tertiary)", color: "var(--text-primary)", borderColor: "var(--border-primary)" }}
+                    >
+                      <option value="center">Center (Default)</option>
+                      <option value="top">Top</option>
+                      <option value="bottom">Bottom</option>
+                      <option value="left">Left</option>
+                      <option value="right">Right</option>
+                      <option value="top left">Top Left</option>
+                      <option value="top right">Top Right</option>
+                      <option value="bottom left">Bottom Left</option>
+                      <option value="bottom right">Bottom Right</option>
+                    </select>
+                  </div>
+                  <div>
+                    <p className="text-xs mb-2" style={{ color: "var(--text-secondary)" }}>Preview (adjust crop position above):</p>
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-32 h-32 object-cover rounded-lg border"
+                      style={{ borderColor: "var(--border-primary)", objectPosition: imagePosition }}
+                    />
+                  </div>
                 </div>
               )}
             </div>

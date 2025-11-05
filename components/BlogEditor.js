@@ -10,9 +10,6 @@ export default function BlogEditor({ onSave, initialPost = null }) {
   const [goblinRating, setGoblinRating] = useState(
     initialPost?.goblinRating || 3
   );
-  const [merchantLevel, setMerchantLevel] = useState(
-    initialPost?.merchantLevel || "Apprentice"
-  );
   const [coverImage, setCoverImage] = useState(initialPost?.coverImage || "");
   const [isPublished, setIsPublished] = useState(
     initialPost?.isPublished || false
@@ -45,7 +42,6 @@ export default function BlogEditor({ onSave, initialPost = null }) {
         .map((tag) => tag.trim())
         .filter((tag) => tag),
       goblinRating,
-      merchantLevel,
       coverImage,
       isPublished: publish,
       ...(initialPost && { _id: initialPost._id }),
@@ -112,40 +108,22 @@ export default function BlogEditor({ onSave, initialPost = null }) {
         />
       </div>
 
-      {/* Goblin-specific fields */}
-      <div className="grid md:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label className="block text-sm font-medium text-emerald-200 mb-2">
-            Goblin Rating (1-5 Stars)
-          </label>
-          <select
-            value={goblinRating}
-            onChange={(e) => setGoblinRating(Number(e.target.value))}
-            className="w-full px-4 py-3 bg-slate-800 border border-emerald-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
-          >
-            {[1, 2, 3, 4, 5].map((rating) => (
-              <option key={rating} value={rating}>
-                {rating} {"★".repeat(rating)}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-emerald-200 mb-2">
-            Merchant Level
-          </label>
-          <select
-            value={merchantLevel}
-            onChange={(e) => setMerchantLevel(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-800 border border-emerald-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
-          >
-            <option value="Apprentice">Apprentice</option>
-            <option value="Journeyman">Journeyman</option>
-            <option value="Master">Master</option>
-            <option value="Grand Master">Grand Master</option>
-          </select>
-        </div>
+      {/* Goblin Rating */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-emerald-200 mb-2">
+          Goblin Rating (1-5 Stars)
+        </label>
+        <select
+          value={goblinRating}
+          onChange={(e) => setGoblinRating(Number(e.target.value))}
+          className="w-full px-4 py-3 bg-slate-800 border border-emerald-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
+        >
+          {[1, 2, 3, 4, 5].map((rating) => (
+            <option key={rating} value={rating}>
+              {rating} {"★".repeat(rating)}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Cover Image */}
@@ -290,7 +268,6 @@ It was a *most profitable* venture indeed!"
               <span className="text-amber-400">
                 {"★".repeat(goblinRating)}
               </span>
-              <span className="text-purple-300 text-sm">{merchantLevel}</span>
             </div>
             <div
               className="text-emerald-200 leading-relaxed"

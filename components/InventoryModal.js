@@ -76,6 +76,7 @@ export default function InventoryModal({ item, isOpen, onClose, onEdit, onDelete
                 src={item.picture}
                 alt={item.title}
                 className="w-full h-64 object-cover rounded-lg border border-emerald-600"
+                style={{ objectPosition: item.imagePosition || "center" }}
                 onError={() => setImageError(true)}
               />
             </div>

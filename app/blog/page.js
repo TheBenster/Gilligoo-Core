@@ -25,6 +25,29 @@ export default function BlogPage() {
     }
   };
 
+  const handleDeletePost = async (postId, postTitle) => {
+    if (!confirm(`Are you sure you want to delete "${postTitle}"? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/posts?id=${postId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        alert("Chronicle deleted successfully!");
+        fetchPosts(); // Refresh the list
+      } else {
+        const data = await response.json();
+        alert("Error deleting chronicle: " + data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      alert("Error deleting chronicle");
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
@@ -82,9 +105,6 @@ export default function BlogPage() {
                   <span className="text-amber-400 font-semibold">
                     {"★".repeat(post.goblinRating)}
                   </span>
-                  <span className="text-purple-300 text-sm">
-                    {post.merchantLevel}
-                  </span>
                 </div>
 
                 <h2 className="text-xl font-bold mb-3 transition-colors" style={{ color: "var(--text-primary)" }}>
@@ -121,6 +141,28 @@ export default function BlogPage() {
                     Read Chronicle →
                   </Link>
                 </div>
+
+                {/* Admin Actions */}
+                {session?.user?.isAdmin && (
+                  <div className="flex gap-2 mt-4 pt-4 border-t" style={{ borderColor: "var(--border-primary)" }}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDeletePost(post._id, post.title);
+                      }}
+                      className="flex-1 bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded text-sm font-medium transition-colors"
+                    >
+                      Delete
+                    </button>
+                    <Link
+                      href={`/write?edit=${post._id}`}
+                      className="flex-1 px-3 py-2 rounded text-sm font-medium transition-colors text-center"
+                      style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
+                    >
+                      Edit
+                    </Link>
+                  </div>
+                )}
               </article>
             ))}
           </div>

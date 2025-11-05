@@ -16,6 +16,10 @@ const InventorySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imagePosition: {
+      type: String,
+      default: "center",
+    },
     shlingobs: {
       type: Number,
       required: true,

@@ -156,3 +156,41 @@ export async function PUT(request) {
     );
   }
 }
+
+// DELETE - Delete a post
+export async function DELETE(request) {
+  // Check if user is admin
+  const authError = await requireAdmin(request);
+  if (authError) return authError;
+
+  try {
+    await dbConnect();
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { message: "Post ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const post = await Post.findByIdAndDelete(id);
+
+    if (!post) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      message: "Post deleted successfully",
+      deletedPost: post,
+    });
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return NextResponse.json(
+      { message: "Error deleting post", error: error.message },
+      { status: 500 }
+    );
+  }
+}

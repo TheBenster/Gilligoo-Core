@@ -55,12 +55,12 @@ export default async function BlogPostPage({ params }) {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-emerald-900 to-slate-800 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg-primary)" }}>
         <div className="goblin-card p-8 text-center max-w-md">
-          <h1 className="text-3xl font-bold text-emerald-300 mb-4">
+          <h1 className="text-3xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
             Chronicle Not Found
           </h1>
-          <p className="text-emerald-200 mb-6">
+          <p className="mb-6" style={{ color: "var(--text-secondary)" }}>
             This goblin tale seems to have vanished into the shadows...
           </p>
           <Link href="/blog" className="goblin-button">
@@ -72,12 +72,13 @@ export default async function BlogPostPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-emerald-900 to-slate-800">
+    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
       <article className="container mx-auto px-4 py-16 max-w-4xl">
         {/* Back to blog link */}
         <Link
           href="/blog"
-          className="inline-flex items-center text-emerald-300 hover:text-emerald-100 mb-8"
+          className="inline-flex items-center mb-8 transition-colors"
+          style={{ color: "var(--accent-primary)" }}
         >
           ← Back to Chronicles
         </Link>
@@ -97,16 +98,13 @@ export default async function BlogPostPage({ params }) {
             <span className="text-amber-400 text-xl">
               {"★".repeat(post.goblinRating)}
             </span>
-            <span className="bg-purple-600 text-purple-100 px-3 py-1 rounded-full text-sm font-semibold">
-              {post.merchantLevel}
-            </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-emerald-100 mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight" style={{ color: "var(--text-primary)" }}>
             {post.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-4 text-emerald-300 text-sm">
+          <div className="flex flex-wrap items-center gap-4 text-sm" style={{ color: "var(--text-secondary)" }}>
             <span>
               Published{" "}
               {new Date(
@@ -125,7 +123,8 @@ export default async function BlogPostPage({ params }) {
               {post.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-emerald-800 text-emerald-200 px-3 py-1 rounded-full text-sm"
+                  className="px-3 py-1 rounded-full text-sm"
+                  style={{ background: "var(--accent-primary)", color: "var(--text-on-accent)" }}
                 >
                   #{tag}
                 </span>
@@ -135,28 +134,25 @@ export default async function BlogPostPage({ params }) {
         </header>
 
         {/* Post content */}
-        <div className="bg-black bg-opacity-20 backdrop-blur-sm rounded-lg p-8 border border-emerald-500">
+        <div className="rounded-lg p-8 border" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-primary)" }}>
           <div
             className="prose prose-emerald prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: post.content }}
             style={{
-              color: "#d1fae5",
+              color: "var(--text-primary)",
               lineHeight: "1.7",
             }}
           />
         </div>
 
         {/* Post footer */}
-        <footer className="mt-12 pt-8 border-t border-emerald-800">
+        <footer className="mt-12 pt-8 border-t" style={{ borderColor: "var(--border-primary)" }}>
           <div className="flex justify-between items-center">
-            <div className="text-emerald-300">
+            <div style={{ color: "var(--text-secondary)" }}>
               <p className="text-sm mb-1">Chronicle Classification:</p>
               <div className="flex items-center gap-3">
                 <span className="text-amber-400">
                   Goblin Rating: {"★".repeat(post.goblinRating)}
-                </span>
-                <span className="text-purple-300">
-                  Level: {post.merchantLevel}
                 </span>
               </div>
             </div>
